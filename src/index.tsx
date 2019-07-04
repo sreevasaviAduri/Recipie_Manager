@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <h1>Hello</h1>
       <h2>Welcome to Recipie Manager</h2>
+      <p>Add updates</p>
     </div>
   );
 }
