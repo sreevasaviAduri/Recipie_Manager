@@ -1,5 +1,6 @@
 import * as React from "react";
 import { render } from "react-dom";
+import ReduxSetup from "./Redux/ReduxSetup";
 
 import "./styles.css";
 
@@ -14,4 +15,4 @@ function App() {
 }
 
 const rootElement = document.getElementById("root");
-render(<App />, rootElement);
+render(<ReduxSetup />, rootElement);
