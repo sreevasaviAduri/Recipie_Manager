@@ -4,16 +4,17 @@ import uuid from "uuid";
 
 const recipiesDefaultState = [];
 
+const saveState = state => {
+  const recipiesDate = JSON.stringify(state);
+  localStorage.setItem("recipie", recipiesDate);
+};
 const RecipieReducer = (state = recipiesDefaultState, action) => {
   switch (action.type) {
     case "ADD_RECIPIE":
-      console.log("Add Recipie", action.recipies);
       return state.concat(action.recipies);
     case "DELETE_RECIPIE":
-      console.log("Delete Recipie", action.id);
       return state.filter(obj => obj.id !== action.id);
     case "EDIT_RECIPIE":
-      console.log("EDIT RECIPIE", action.id, action.cooktime);
       return state.map(obj =>
         obj.id === action.id ? { ...obj, ...action.cooktime } : obj
       );
@@ -25,20 +26,23 @@ const RecipieReducer = (state = recipiesDefaultState, action) => {
 const filtersDefaultState = {
   title: "",
   cooktime: undefined,
-  text: ""
+  text: "",
+  sortBy: "cooktime"
 };
 
 const FilterReducer = (state = filtersDefaultState, action) => {
   switch (action.type) {
     case "SET_TITLE":
-      console.log("set title");
       return { ...state, title: action.title };
     case "SET_COOKTIME":
-      console.log("cooktime");
       return { ...state, cooktime: action.cooktime };
     case "SET_TEXT":
-      console.log("set text");
       return { ...state, text: action.text };
+    case "SORT_BY_COOKTIME":
+      return {
+        ...state,
+        sortBy: "cooktime"
+      };
     default:
       return state;
   }
@@ -52,7 +56,7 @@ const store = createStore(
 );
 
 const addRecipie = ({
-  id = 0,
+  id = uuid(),
   title = "",
   description = "",
   ingredients = "",
@@ -74,13 +78,10 @@ const addRecipie = ({
   }
 });
 
-const deleteRecipie = ({ id } = {}) => (
-  console.log(id),
-  {
-    type: "DELETE_RECIPIE",
-    id
-  }
-);
+const deleteRecipie = ({ id } = {}) => ({
+  type: "DELETE_RECIPIE",
+  id
+});
 
 const editRecipie = (id, cooktime) => ({
   type: "EDIT_RECIPIE",
@@ -100,23 +101,85 @@ const setText = text => ({
   type: "SET_TEXT",
   text
 });
+const sortByCookTime = () => ({
+  type: "SORT_BY_COOKTIME"
+});
+
+const getVisibleRecipies = (recipies, filters) => {
+  if (filters.cooktime) {
+    return recipies.filter(recipie => {
+      console.log("cooktimefilter");
+      const cooktimefilter = recipie.cooktime === filters.cooktime;
+      return cooktimefilter;
+    });
+  } else if (filters.title) {
+    return recipies.filter(recipie => {
+      console.log("titl filter");
+      const recipieTitle = recipie.title.toLowerCase();
+      const filtertitle = filters.title.toLowerCase();
+      const titleMatch = recipieTitle.includes(filtertitle);
+      return titleMatch;
+    });
+  } else if (filters.text) {
+    return recipies.filter(recipie => {
+      console.log("text filter");
+      const recipieIngredients = recipie.ingredients.toLowerCase();
+      const filterstext = filters.text.toLowerCase();
+      const textMatch = recipieIngredients.includes(filterstext);
+      return textMatch;
+    });
+  } else if (filters.sortBy) {
+    return recipies.sort((a, b) => {
+      if (filters.sortBy === "cooktime") {
+        return a.cooktime > b.cooktime ? 1 : -1;
+      }
+    });
+  } else {
+    return recipies;
+  }
+};
 
 store.subscribe(() => {
   const state = store.getState();
-  console.log("state: ", state);
+  const recipiesData = JSON.parse(localStorage.getItem("rec"));
+  // console.log("recipie data", recipiesData);
+  // if (recipiesData) {
+  const recipies = JSON.stringify(state);
+  //   localStorage.setItem("rec", recipies);
+  // } else {
+  //   const recipies = JSON.stringify(state);
+
+  // }
+  localStorage.setItem("rec", recipies);
+  // console.log("state: ", state);
+  const visibleRecipies = getVisibleRecipies(rec.recipies, rec.filters);
+  console.log("visibility", visibleRecipies);
 });
 
-store.dispatch(addRecipie({ id: 4, title: "Biryani" }));
-store.dispatch(addRecipie({ id: 5, title: "Rasagulla" }));
-store.dispatch(deleteRecipie({ id: 5 }));
-store.dispatch(editRecipie(4, { cooktime: 10 }));
-store.dispatch(
-  editRecipie(4, { preparation: "takes bit long , soak it overnight" })
+const recipie1 = store.dispatch(
+  addRecipie({ title: "Biryani", cooktime: 10, ingredients: "onions" })
 );
+store.dispatch(
+  addRecipie({
+    title: "Rasagulla",
+    cooktime: 5,
+    ingredients: "chilli, onions"
+  })
+);
+// store.dispatch(
+//   addRecipie({ title: "Rasagulla", cooktime: 16, ingredients: "salt" })
+// );
+//store.dispatch(deleteRecipie({ id: recipie1.recipies.id }));
+//store.dispatch(editRecipie(4, { cooktime: 10 }));
+//store.dispatch(
+//editRecipie(4, { preparation: "takes bit long , soak it overnight" })
+//);
 
-store.dispatch(setTitle("biryani"));
-store.dispatch(setCookTime(5));
-store.dispatch(setText("without Onions"));
+//store.dispatch(setTitle("rasagulla"));
+//store.dispatch(setCookTime(16));
+// store.dispatch(setText("without Onions"));
+//store.dispatch(setText("on"));
+store.dispatch(sortByCookTime());
 
 class ReduxSetup extends Component {
   render() {
