@@ -13,7 +13,6 @@ const LayoutPage = props => {
   const toggle = () => {
     setCollapsed(!collapsed);
   };
-  console.log(props);
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -55,7 +54,6 @@ const LayoutPage = props => {
             minHeight: 280
           }}
         >
-        {console.log("children props",props.children)}
           {props.children}
         </Content>
       </Layout>
