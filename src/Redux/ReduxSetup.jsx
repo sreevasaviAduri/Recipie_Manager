@@ -141,18 +141,20 @@ const getVisibleRecipies = (recipies, filters) => {
 
 store.subscribe(() => {
   const state = store.getState();
-  const recipiesData = JSON.parse(localStorage.getItem("rec"));
-  // console.log("recipie data", recipiesData);
-  // if (recipiesData) {
-  const recipies = JSON.stringify(state);
-  //   localStorage.setItem("rec", recipies);
-  // } else {
-  //   const recipies = JSON.stringify(state);
-
-  // }
-  localStorage.setItem("rec", recipies);
-  // console.log("state: ", state);
-  const visibleRecipies = getVisibleRecipies(rec.recipies, rec.filters);
+  const recipiesData = JSON.parse(localStorage.getItem("recipie"));
+  console.log("recipie data", recipiesData);
+  if (recipiesData) {
+    const recipies = JSON.stringify(recipiesData);
+    localStorage.setItem("recipie", recipies);
+  } else {
+    const recipies = JSON.stringify(state);
+    localStorage.setItem("recipie", recipies);
+  }
+  console.log("state: ", state);
+  const visibleRecipies = getVisibleRecipies(
+    recipiesData.recipies,
+    recipiesData.filters
+  );
   console.log("visibility", visibleRecipies);
 });
 

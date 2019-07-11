@@ -1,39 +1,41 @@
 import React from "react";
 import "antd/dist/antd.css";
 import "../styles.css";
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Layout, Menu, Icon } from "antd";
-import AddNewRecipie from "./AddNewRecipie";
-import ShowRecipies from "./ShowRecipies";
 
 const { Header, Sider, Content } = Layout;
 
-const MainPage = props => {
+const LayoutPage = props => {
   const [collapsed, setCollapsed] = React.useState(false);
 
   const toggle = () => {
     setCollapsed(!collapsed);
   };
-
+  console.log(props);
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1" onClick={() => props.history.push("/")}>
-            <Icon type="right" />
-            <span>Recipie Manager</span>
+          <Menu.Item key="1">
+            <Link to={{ pathname: "/" }}>
+              <Icon type="right" />
+              <span>Recipie Manager</span>
+            </Link>
           </Menu.Item>
-          <Menu.Item key="2" onClick={() => props.history.push("/show")}>
+          <Menu.Item key="2">
             <Link to={{ pathname: "/show" }}>
               <Icon type="unordered-list" />
               <span>Show Recipies</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="3" onClick={() => props.history.push("/add")}>
-            <Icon type="plus-circle" />
-            <span>Add Recipie</span>
+          <Menu.Item key="3">
+            <Link to={{ pathname: "/add" }}>
+              <Icon type="plus-circle" />
+              <span>Add Recipie</span>
+            </Link>
           </Menu.Item>
         </Menu>
       </Sider>
@@ -53,6 +55,7 @@ const MainPage = props => {
             minHeight: 280
           }}
         >
+        {console.log("children props",props.children)}
           {props.children}
         </Content>
       </Layout>
@@ -60,4 +63,4 @@ const MainPage = props => {
   );
 };
 
-export default MainPage;
+export default LayoutPage;
