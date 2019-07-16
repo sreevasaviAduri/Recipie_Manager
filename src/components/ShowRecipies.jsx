@@ -4,7 +4,7 @@ import Recipie from "./Recipie";
 import getVisibleRecipies from "../selectors/getVisibleSelectors";
 import RecipieListFilters from "./RecipieListFilters";
 
-const ShowRecipies = () => {
+const ShowRecipies = props => {
   const recipiesfilterd = getVisibleRecipies(
     useSelector(state => state.recipies),
     useSelector(state => state.filters)

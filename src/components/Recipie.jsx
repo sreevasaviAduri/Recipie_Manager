@@ -3,10 +3,11 @@ import { Descriptions, Button } from "antd";
 import "../styles.css";
 import { useDispatch } from "react-redux";
 import { deleteRecipie } from "../actions/recipies";
+import { Link } from "react-router-dom";
 
 const Recipie = props => {
   const dispatch = useDispatch();
-  const handleEdit = () => {};
+
   return (
     <div style={{ marginTop: 10 }}>
       <Descriptions
@@ -30,8 +31,8 @@ const Recipie = props => {
           {props.recipie.directions}
         </Descriptions.Item>
       </Descriptions>
-      <Button type="primary" onClick={handleEdit}>
-        Edit
+      <Button type="primary">
+        <Link to={`/edit/${props.recipie.id}`}>Edit</Link>
       </Button>
       <Button
         style={{ marginLeft: 10, marginTop: 10 }}

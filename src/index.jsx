@@ -9,6 +9,7 @@ import ShowRecipie from "./components/ShowRecipies";
 import WelcomePage from "./components/WelcomePage";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import EditRecipie from "./components/EditRecipie";
 const store = configurestore();
 
 function AppRouting() {
@@ -17,6 +18,7 @@ function AppRouting() {
       <Route path="/" component={WelcomePage} exact={true} />
       <Route path="/add" component={AddNewRecipie} />
       <Route path="/show" component={ShowRecipie} />
+      <Route path="/edit/:id" component={EditRecipie} />
     </Switch>
   );
 }
