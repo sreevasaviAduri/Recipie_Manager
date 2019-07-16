@@ -7,7 +7,7 @@ export const addRecipie = ({
   ingredients = "",
   directions = "",
   preparation = "",
-  cooktime = 0,
+  cooktime = "",
   notes = ""
 } = {}) => ({
   type: "ADD_RECIPIE",

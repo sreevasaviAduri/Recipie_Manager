@@ -2,10 +2,12 @@ import React from "react";
 import "antd/dist/antd.css";
 import "../styles.css";
 import { Link } from "react-router-dom";
-
-import { Layout, Menu, Icon } from "antd";
+import { useSelector } from "react-redux";
+import { Layout, Menu, Icon, Typography, Row, Col } from "antd";
 
 const { Header, Sider, Content } = Layout;
+
+const { Title } = Typography;
 
 const LayoutPage = props => {
   const [collapsed, setCollapsed] = React.useState(false);
@@ -13,6 +15,7 @@ const LayoutPage = props => {
   const toggle = () => {
     setCollapsed(!collapsed);
   };
+  const recipies = useSelector(state => state.recipies);
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -40,11 +43,19 @@ const LayoutPage = props => {
       </Sider>
       <Layout>
         <Header style={{ background: "#fff", padding: 0 }}>
-          <Icon
-            className="trigger"
-            type={collapsed ? "menu-unfold" : "menu-fold"}
-            onClick={toggle}
-          />
+          <Row>
+            <Col span={6}>
+              <Icon
+                className="trigger"
+                type={collapsed ? "menu-unfold" : "menu-fold"}
+                onClick={toggle}
+                span={6}
+              />
+            </Col>
+            <Col span={12}>
+              <Title title="Recipies">Recipies: {recipies.length}</Title>{" "}
+            </Col>
+          </Row>
         </Header>
         <Content
           style={{
