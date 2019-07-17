@@ -7,7 +7,7 @@ export const addRecipie = ({
   ingredients = "",
   directions = "",
   preparation = "",
-  cooktime = "",
+  cooktime = null,
   notes = ""
 } = {}) => ({
   type: "ADD_RECIPIE",
@@ -28,8 +28,8 @@ export const deleteRecipie = ({ id } = {}) => ({
   id
 });
 
-export const editRecipie = (id, cooktime) => ({
+export const editRecipie = (id, editedRecipie) => ({
   type: "EDIT_RECIPIE",
   id,
-  cooktime
+  editedRecipie
 });

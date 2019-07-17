@@ -15,7 +15,7 @@ const getVisibleRecipies = (recipies, filters) => {
     });
   } else if (filters.text) {
     return recipies.filter(recipie => {
-      console.log("text filter");
+      console.log("text filter", filters.text);
       const recipieIngredients = recipie.ingredients.toLowerCase();
       const filterstext = filters.text.toLowerCase();
       const textMatch = recipieIngredients.includes(filterstext);

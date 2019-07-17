@@ -13,6 +13,12 @@ const RecipieListFilters = () => {
   console.log("filters", filters);
 
   console.log("recipielist filter ", recipies);
+  const ingredients = recipies.map(recipie => {
+    const val = recipie.ingredients.split(",");
+    return val;
+  });
+  const listIngredients = ingredients.flat();
+  const cookTimings = recipies.map(recipie => recipie.cooktime);
 
   return (
     <div>
@@ -53,6 +59,36 @@ const RecipieListFilters = () => {
       >
         {recipies.map(recipie => (
           <Option value={recipie.title}>{recipie.title}</Option>
+        ))}
+      </Select>
+      <Select
+        showSearch
+        style={{ width: 200, marginLeft: 10 }}
+        placeholder="Ingredients Filter"
+        optionFilterProp="children"
+        onChange={e => dispatch(setText(e))}
+        allowClear={true}
+        filterOption={(input, option) =>
+          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+      >
+        {[...new Set(listIngredients)].map(ingr => (
+          <Option value={ingr}>{ingr}</Option>
+        ))}
+      </Select>
+      <Select
+        showSearch
+        style={{ width: 200, marginLeft: 10 }}
+        placeholder="CookTime Filter"
+        optionFilterProp="children"
+        onChange={e => dispatch(setCookTime(e))}
+        allowClear={true}
+        filterOption={(input, option) =>
+          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+      >
+        {[...new Set(cookTimings)].map(cookTime => (
+          <Option value={cookTime}>{cookTime}</Option>
         ))}
       </Select>
     </div>

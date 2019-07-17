@@ -8,9 +8,9 @@ const RecipieReducer = (state = recipiesDefaultState, action) => {
       console.log("Delete Recipie", action.id);
       return state.filter(obj => obj.id !== action.id);
     case "EDIT_RECIPIE":
-      console.log("EDIT RECIPIE", action.id, action.cooktime);
+      console.log("EDIT RECIPIE papaaa", action.id, action.editedRecipie);
       return state.map(obj =>
-        obj.id === action.id ? { ...obj, ...action.cooktime } : obj
+        obj.id === action.id ? { ...obj, ...action.editedRecipie } : obj
       );
     default:
       return state;

@@ -16,7 +16,7 @@ export default () => {
   store.subscribe(() => {
     const state = store.getState();
     saveState(state);
-    console.log("redux store and state", state);
+    console.log("Store Save State Updated", state);
   });
 
   return store;

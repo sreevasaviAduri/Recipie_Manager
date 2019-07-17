@@ -12,11 +12,21 @@ const formTailLayout = {
 };
 
 const RecipieForm = props => {
-  const [title, setTitle] = React.useState("");
-  const [desc, setDesc] = React.useState();
-  const [ingred, setIngred] = React.useState();
-  const [directions, setDirections] = React.useState();
-  const [cookTime, setCookTime] = React.useState();
+  const [title, setTitle] = React.useState(
+    props.recipie ? props.recipie.title : ""
+  );
+  const [desc, setDesc] = React.useState(
+    props.recipie ? props.recipie.description : ""
+  );
+  const [ingred, setIngred] = React.useState(
+    props.recipie ? props.recipie.ingredients : ""
+  );
+  const [directions, setDirections] = React.useState(
+    props.recipie ? props.recipie.directions : ""
+  );
+  const [cookTime, setCookTime] = React.useState(
+    props.recipie ? props.recipie.cooktime : null
+  );
 
   const { getFieldDecorator } = props.form;
 
@@ -39,12 +49,13 @@ const RecipieForm = props => {
     <Form onSubmit={handleSubmit}>
       <Form.Item {...formItemLayout} label="Title">
         {getFieldDecorator("titles", {
+          initialValue: title,
           rules: [
             { required: true, message: "Please input your Recipie Title!" }
           ]
         })(
           <Input
-            placeholder="Please input Recipie Title"
+            placeholder="Please Input Title"
             onChange={e => {
               setTitle(e.target.value);
             }}
@@ -53,6 +64,7 @@ const RecipieForm = props => {
       </Form.Item>
       <Form.Item {...formItemLayout} label="Description">
         {getFieldDecorator("description", {
+          initialValue: desc,
           rules: [
             {
               required: false,
@@ -68,6 +80,7 @@ const RecipieForm = props => {
       </Form.Item>
       <Form.Item {...formItemLayout} label="Ingredients">
         {getFieldDecorator("ingredients", {
+          initialValue: ingred,
           rules: [
             {
               required: true,
@@ -83,6 +96,7 @@ const RecipieForm = props => {
       </Form.Item>
       <Form.Item {...formItemLayout} label="Directions">
         {getFieldDecorator("directions", {
+          initialValue: directions,
           rules: [
             {
               required: false,
@@ -98,6 +112,7 @@ const RecipieForm = props => {
       </Form.Item>
       <Form.Item {...formItemLayout} label="CookTime">
         {getFieldDecorator("cooktime", {
+          initialValue: cookTime,
           rules: [
             {
               required: true,
@@ -106,8 +121,9 @@ const RecipieForm = props => {
           ]
         })(
           <Input
-            placeholder="Please input CookTime"
+            placeholder="Please input Cooking Time"
             onChange={e => setCookTime(e.target.value)}
+            type="number"
           />
         )}
       </Form.Item>
