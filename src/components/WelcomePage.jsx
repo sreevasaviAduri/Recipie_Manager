@@ -1,7 +1,11 @@
 import React from "react";
 
 const WelcomePage = () => {
-  return <div>Welcome to Recipie Manager</div>;
+  return (
+    <div>
+      <h1>Welcome to Recipie Manager</h1>
+    </div>
+  );
 };
 
 export default WelcomePage;

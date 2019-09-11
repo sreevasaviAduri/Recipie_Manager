@@ -1,23 +1,26 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import RecipieReducer from "../reducers/recipiereducer";
 import FilterReducer from "../reducers/filterreducer";
-import { loadState, saveState } from "../localstorage/storage";
+//import { loadState, saveState } from "../localstorage/storage";
+import thunk from "redux-thunk";
 
 export default () => {
-  const persistedState = loadState();
+  //const persistedState = loadState();
   const store = createStore(
     combineReducers({
       recipies: RecipieReducer,
       filters: FilterReducer
     }),
-    persistedState
+    applyMiddleware(thunk)
+    //persistedStates
   );
 
-  store.subscribe(() => {
-    const state = store.getState();
-    saveState(state);
-    console.log("Store Save State Updated", state);
-  });
+  console.log("State.recipies-------", store.getState());
+  // store.subscribe(() => {
+  //   const state = store.getState();
+  //   saveState(state);
+  //   console.log("Store Save State Updated", state);
+  // });
 
   return store;
 };

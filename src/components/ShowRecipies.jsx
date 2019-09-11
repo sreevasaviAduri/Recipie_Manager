@@ -9,7 +9,7 @@ const ShowRecipies = props => {
     useSelector(state => state.recipies),
     useSelector(state => state.filters)
   );
-
+  console.log("show recipies", useSelector(state => state.recipies));
   return (
     <div>
       <RecipieListFilters />

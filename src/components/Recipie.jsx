@@ -2,7 +2,7 @@ import React from "react";
 import { Descriptions, Button } from "antd";
 import "../styles.css";
 import { useDispatch } from "react-redux";
-import { deleteRecipie } from "../actions/recipies";
+import { startDeleteRecipie } from "../actions/recipies";
 import { Link } from "react-router-dom";
 
 const Recipie = props => {
@@ -38,7 +38,7 @@ const Recipie = props => {
         style={{ marginLeft: 10, marginTop: 10 }}
         type="primary"
         onClick={() => {
-          dispatch(deleteRecipie({ id: props.recipie.id }));
+          dispatch(startDeleteRecipie({ id: props.recipie.id }));
         }}
       >
         Delete

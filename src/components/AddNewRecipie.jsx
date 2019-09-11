@@ -1,7 +1,7 @@
 import React from "react";
 import RecipieFormWrap from "./RecipieForm";
 import { useDispatch } from "react-redux";
-import { addRecipie } from "../actions/recipies";
+import { startAddRecipies } from "../actions/recipies";
 
 const AddNewRecipie = props => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ const AddNewRecipie = props => {
     <div>
       <RecipieFormWrap
         onSubmit={recipie => {
-          dispatch(addRecipie(recipie));
+          dispatch(startAddRecipies(recipie));
           props.history.push("/show");
         }}
       />

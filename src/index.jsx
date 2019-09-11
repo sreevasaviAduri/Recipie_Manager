@@ -7,9 +7,11 @@ import LayoutPage from "./components/LayoutPage";
 import AddNewRecipie from "./components/AddNewRecipie";
 import ShowRecipie from "./components/ShowRecipies";
 import WelcomePage from "./components/WelcomePage";
+import "./firebase/firebase";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import EditRecipie from "./components/EditRecipie";
+import { startSetRecipies } from "./actions/recipies";
 const store = configurestore();
 
 function AppRouting() {
@@ -27,10 +29,34 @@ const rootElement = document.getElementById("root");
 render(
   <Provider store={store}>
     <BrowserRouter>
-      <LayoutPage>
-        <AppRouting />
-      </LayoutPage>
+      <LayoutPage>Loading...</LayoutPage>
     </BrowserRouter>
   </Provider>,
   rootElement
 );
+
+// store.dispatch(startSetRecipies()).then(() => {
+//   render(
+//     <Provider store={store}>
+//       <BrowserRouter>
+//         <LayoutPage>
+//           <AppRouting />
+//         </LayoutPage>
+//       </BrowserRouter>
+//     </Provider>,
+//     rootElement
+//   );
+// })
+
+store.dispatch(startSetRecipies()).then(() => {
+  render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <LayoutPage>
+          <AppRouting />
+        </LayoutPage>
+      </BrowserRouter>
+    </Provider>,
+    rootElement
+  );
+});
