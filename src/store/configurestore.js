@@ -1,26 +1,17 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import RecipieReducer from "../reducers/recipiereducer";
 import FilterReducer from "../reducers/filterreducer";
-//import { loadState, saveState } from "../localstorage/storage";
-import thunk from "redux-thunk";
+import AuthReducer from "../reducers/authreducer";
 
 export default () => {
-  //const persistedState = loadState();
   const store = createStore(
     combineReducers({
       recipies: RecipieReducer,
-      filters: FilterReducer
+      filters: FilterReducer,
+      authentication: AuthReducer
     }),
     applyMiddleware(thunk)
-    //persistedStates
   );
-
-  console.log("State.recipies-------", store.getState());
-  // store.subscribe(() => {
-  //   const state = store.getState();
-  //   saveState(state);
-  //   console.log("Store Save State Updated", state);
-  // });
-
   return store;
 };

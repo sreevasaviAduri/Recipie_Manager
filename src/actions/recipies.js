@@ -1,4 +1,4 @@
-import { database } from "../firebase/firebase";
+import database from "../firebase/firebase";
 
 export const addRecipie = recipie => ({
   type: "ADD_RECIPIE",

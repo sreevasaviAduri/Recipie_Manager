@@ -2,8 +2,9 @@ import React from "react";
 import "antd/dist/antd.css";
 import "../styles.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Layout, Menu, Icon, Typography, Row, Col } from "antd";
+import { logOut } from "../actions/auth";
 
 const { Header, Sider, Content } = Layout;
 
@@ -16,13 +17,14 @@ const LayoutPage = props => {
     setCollapsed(!collapsed);
   };
   const recipies = useSelector(state => state.recipies);
+  const dispatch = useDispatch();
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1">
-            <Link to={{ pathname: "/" }}>
+            <Link to={{ pathname: "/welcome" }}>
               <Icon type="right" />
               <span>Recipie Manager</span>
             </Link>
@@ -38,6 +40,10 @@ const LayoutPage = props => {
               <Icon type="plus-circle" />
               <span>Add Recipie</span>
             </Link>
+          </Menu.Item>
+          <Menu.Item key="4">
+            <Icon type="logout" />
+            <span onClick={() => dispatch(logOut())}>Logout</span>
           </Menu.Item>
         </Menu>
       </Sider>
